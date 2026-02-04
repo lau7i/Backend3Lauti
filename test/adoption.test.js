@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import User from "../src/dao/models/user.model.js";
 import Pet from "../src/dao/models/pet.model.js";
-import chai from "chai";
+import { expect } from "chai";
 import supertest from "supertest";
 
 const expect = chai.expect;
@@ -11,11 +11,12 @@ describe("Testing Adoption Router", () => {
   let userId;
   let petId;
 
-before(async function () {
+  before(async function () {
+    this.timeout(5000); 
     const MONGO_URL = "mongodb+srv://lautaro:Ok4NyR8Vt6cUmPbk@clusterbackend3.edhwrsi.mongodb.net/?appName=Clusterbackend3";
     await mongoose.connect(MONGO_URL);
-});
-  
+  });
+
   it("Debería crear un usuario y una mascota para la prueba", async () => {
     const user = await User.create({
       first_name: "Test",
@@ -60,9 +61,16 @@ before(async function () {
     expect(response.body.error).to.equal("User not found");
   });
 
+  it("Debería fallar si la mascota no existe", async () => {
+      const fakePetId = new mongoose.Types.ObjectId();
+      const response = await requester.get(`/api/adoptions/${userId}/${fakePetId}`);
+      expect(response.status).to.equal(404);
+      expect(response.body.error).to.equal("Pet not found");
+  });
+
   after(async function () {
-    await User.findByIdAndDelete(userId);
-    await Pet.findByIdAndDelete(petId);
+    if(userId) await User.findByIdAndDelete(userId);
+    if(petId) await Pet.findByIdAndDelete(petId);
     await mongoose.disconnect();
   });
 });
