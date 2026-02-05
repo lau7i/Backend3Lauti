@@ -4,46 +4,47 @@ import User from "../dao/models/user.model.js";
 const router = Router();
 
 /**
- * @swagger
- * components:
- * schemas:
- * User:
- * type: object
- * properties:
- * _id:
- * type: string
- * description: ID autogenerado por MongoDB
- * first_name:
- * type: string
- * description: Nombre del usuario
- * email:
- * type: string
- * description: Correo electrónico
- * role:
- * type: string
- * description: Rol del usuario (user/admin)
- * pets:
- * type: array
- * description: Lista de mascotas adoptadas
- * items:
- * type: object
+  * @swagger
+  *  components: 
+  *   schemas:
+  *     User:
+  *       type: object
+  *       properties:
+  *         _id:
+  *           type: string
+  *           description: ID autogenerado por MongoDB
+  *         first_name:
+  *           type: string
+  *           description: Nombre del usuario
+  *         email:
+  *           type: string 
+  *           description: Correo electrónico
+  *         role:
+  *           type: string
+  *           description: Rol del usuario (user/admin)
+  *         pets:
+  *           type: array
+  *           description: Lista de mascotas adoptadas
+  *           items:
+  *             type: object
  */
 
 /**
  * @swagger
- * /api/users:
- * get:
- * summary: Obtener todos los usuarios
- * tags: [Users]
- * responses:
- * 200:
- * description: Lista de usuarios obtenida exitosamente
- * content:
- * application/json:
- * schema:
- * type: array
- * items:
- * $ref: '#/components/schemas/User'
+  *  /api/users:
+  *   get:
+  *     summary: Obtener todos los usuarios
+  *     tags:
+  *       - Users
+  *     responses:
+  *       '200':
+  *         description: Lista de usuarios obtenida exitosamente
+  *         content:
+  *           application/json:
+  *             schema:
+  *               type: array
+  *               items:
+  *                 $ref: '#/components/schemas/User'
  */
 router.get("/", async (req, res) => {
   try {
@@ -55,27 +56,28 @@ router.get("/", async (req, res) => {
 });
 
 /**
- * @swagger
- * /api/users/{uid}:
- * get:
- * summary: Obtener un usuario por ID
- * tags: [Users]
- * parameters:
- * - in: path
- * name: uid
- * schema:
- * type: string
- * required: true
- * description: ID del usuario
- * responses:
- * 200:
- * description: Usuario encontrado
- * content:
- * application/json:
- * schema:
- * $ref: '#/components/schemas/User'
- * 404:
- * description: Usuario no encontrado
+  * @swagger
+  *  '/api/users/{uid}':
+  *   get:
+  *     summary: Obtener un usuario por ID
+  *     tags:
+  *       - Users
+  *     parameters:
+  *       - in: path
+  *         name: uid
+  *         required: true
+  *         description: ID del usuario
+  *         schema:
+  *           type: string
+  *     responses:
+  *       '200':
+  *         description: Usuario encontrado
+  *         content:
+  *           application/json:
+  *             schema:
+  *               $ref: '#/components/schemas/User'
+  *       '404':
+  *         description: Usuario no encontrado
  */
 router.get("/:uid", async (req, res) => {
   try {
