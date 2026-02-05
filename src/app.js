@@ -15,8 +15,6 @@ const MONGO_URL = "mongodb+srv://lautaro:Ok4NyR8Vt6cUmPbk@clusterbackend3.edhwrs
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-
-
 mongoose
   .connect(MONGO_URL)
   .then(() => console.log("Conectado con éxito a MongoDB Atlas"))
